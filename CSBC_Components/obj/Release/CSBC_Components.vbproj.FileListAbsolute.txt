@@ -1,0 +1,15 @@
+D:\personal\Source\Repos\Csbc\CSBC_Components\bin\Release\CSBC_Components.dll.config
+D:\personal\Source\Repos\Csbc\CSBC_Components\bin\Release\CSBC_Components.dll
+D:\personal\Source\Repos\Csbc\CSBC_Components\bin\Release\CSBC_Components.pdb
+D:\personal\Source\Repos\Csbc\CSBC_Components\bin\Release\CSBC_Components.xml
+D:\personal\Source\Repos\Csbc\CSBC_Components\bin\Release\LinqKit.dll
+D:\personal\Source\Repos\Csbc\CSBC_Components\bin\Release\EntityFramework.xml
+D:\personal\Source\Repos\Csbc\CSBC_Components\bin\Release\EntityFramework.SqlServer.xml
+D:\personal\Source\Repos\Csbc\CSBC_Components\obj\Release\CSBC_Components.vbprojResolveAssemblyReference.cache
+D:\personal\Source\Repos\Csbc\CSBC_Components\obj\Release\Resources.resources
+D:\personal\Source\Repos\Csbc\CSBC_Components\obj\Release\CSBC_Components.vbproj.GenerateResource.Cache
+D:\personal\Source\Repos\Csbc\CSBC_Components\obj\Release\CSBC_Components.vbproj.CoreCompileInputs.cache
+D:\personal\Source\Repos\Csbc\CSBC_Components\obj\Release\CSBC_Components.dll
+D:\personal\Source\Repos\Csbc\CSBC_Components\obj\Release\CSBC_Components.xml
+D:\personal\Source\Repos\Csbc\CSBC_Components\obj\Release\CSBC_Components.pdb
+D:\personal\Source\Repos\Csbc\CSBC_Components\obj\Release\CSBC_Components.vbprojAssemblyReference.cache
