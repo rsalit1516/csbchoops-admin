@@ -1,0 +1,201 @@
+﻿@model IEnumerable<CSBC.Core.Models.Player>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Division.Div_Desc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Person.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Season.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Team.TeamName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DraftID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DraftNotes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Coach)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CoachID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sponsor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SponsorID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Scholarship)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FamilyDisc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rollover)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OutOfTown)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RefundBatchID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PaidDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PaidAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BalanceOwed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PayType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NoteDesc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CheckMemo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedUser)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PlaysDown)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PlaysUp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ShoppingCartID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Division.Div_Desc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Person.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Season.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Team.TeamName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompanyID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DraftID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DraftNotes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Rating)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Coach)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CoachID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sponsor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SponsorID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Scholarship)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FamilyDisc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Rollover)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OutOfTown)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RefundBatchID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaidDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaidAmount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BalanceOwed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PayType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NoteDesc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CheckMemo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedUser)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PlaysDown)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PlaysUp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShoppingCartID)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PlayerID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PlayerID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PlayerID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,537 @@
+﻿using Microsoft.VisualBasic;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
+using CSBC.Components;
+partial class Households : System.Web.UI.Page
+{
+
+	private void Page_Load(System.Object sender, System.EventArgs e)
+	{
+		//Put user code to initialize the page here
+		if (Session["UserID"] == null)
+			Response.Redirect("Login.aspx");
+
+		if (Page.IsPostBack == false) {
+			Session["Title"] = "Households";
+			Session["CallingScreen"] = "Households.aspx";
+			Session["AccessType"] = AccessType();
+			if (Session["AccessType"] == "R") {
+				btnSave.Enabled = false;
+				btnDelete.Enabled = false;
+				btnComments.Visible = false;
+			}
+			this.txtName.Focus();
+			if (Session["HouseID"] == 0) {
+				ClearFields();
+				string SearchType = Session["SearchType"] + "";
+				switch (SearchType) {
+					case "Name":
+						txtName.Text = Session["FirstLetter"];
+						break;
+					case "Email":
+						txtEmail.Text = Session["FirstLetter"];
+						break;
+					case "City":
+						txtCity.Text = Session["FirstLetter"];
+						break;
+					case "Phone":
+						txtPhone.Text = Session["FirstLetter"];
+						break;
+					case "Address1":
+						txtAddress.Text = Session["FirstLetter"];
+						break;
+				}
+			} else {
+				LoadRow(Session["HouseID"]);
+				LoadMembers(Session["HouseID"]);
+				LoadComments(Session["HouseID"]);
+			}
+		}
+	}
+
+	private string AccessType()
+	{
+		string functionReturnValue = null;
+		Security.ClsUsers oSecurity = new Security.ClsUsers();
+		try {
+			oSecurity.GetAccess(Session["UserID"], "Households", Session["CompanyID"], Session["SeasonID"]);
+		} catch (Exception ex) {
+			lblError.Text = ex.Message;
+		} finally {
+			functionReturnValue = oSecurity.AccessType;
+			oSecurity = null;
+		}
+		return functionReturnValue;
+	}
+
+	private string AccessType_User()
+	{
+		string functionReturnValue = null;
+		Security.ClsUsers oSecurity = new Security.ClsUsers();
+		try {
+			oSecurity.GetAccess(Session["UserID"], "Users", Session["CompanyID"], Session["SeasonID"]);
+		} catch (Exception ex) {
+			lblError.Text = ex.Message;
+		} finally {
+			functionReturnValue = oSecurity.AccessType;
+			oSecurity = null;
+		}
+		return functionReturnValue;
+	}
+
+	private void LoadRow(long RowID)
+	{
+		Profile.ClsHouseholds oHousehold = new Profile.ClsHouseholds();
+		DataTable rsData = null;
+		try {
+			rsData = oHousehold.GetRecords(RowID, Session["CompanyID"]);
+			ClearFields();
+			if ((rsData != null)) {
+				if (rsData.Rows.Count > 0) {
+					txtName.Text = rsData.Rows[0]["Name"] + "";
+					txtAddress.Text = rsData.Rows[0]["Address1"] + "";
+					txtAddress2.Text = rsData.Rows[0]["Address2"] + "";
+					txtCity.Text = rsData.Rows[0]["CITY"] + " ";
+					txtState.Text = rsData.Rows[0]["STATE"] + " ";
+					txtZip.Text = rsData.Rows[0]["Zip"] + " ";
+					txtPhone.Text = rsData.Rows[0]["PHONE"] + "";
+					txtEmail.Text = rsData.Rows[0]["Email"] + "";
+					chkEmail.Checked = rsData.Rows[0]["EmailList"];
+					hidEMail.Value = rsData.Rows[0]["Email"] + "";
+					txtCityCard.Text = rsData.Rows[0]["SportsCard"] + "";
+					lblUserName.Text = rsData.Rows[0]["UserName"] + "";
+					if (AccessType_User() == "U")
+						lblUserName.ToolTip = rsData.Rows[0]["PWord"] + "";
+					btnComments.Enabled = true;
+					txtComments.Enabled = true;
+				}
+			}
+		} catch (Exception ex) {
+			lblError.Text = "LoadRow::" + ex.Message;
+		} finally {
+			oHousehold = null;
+			Session.Add("LinkName", txtName.Text);
+		}
+	}
+
+	private void LoadMembers(long RowID)
+	{
+		Profile.ClsHouseholds oPeople = new Profile.ClsHouseholds();
+		DataTable rsData = null;
+
+		try {
+			rsData = oPeople.LoadMembers(RowID, Session["CompanyID"]);
+			grdMembers.Clear();
+			grdMembers.Columns.Clear();
+			if (rsData.Rows.Count > 0) {
+				var _with1 = grdMembers;
+				_with1.DataSource = rsData;
+				_with1.DataBind();
+				grdMembers.Columns.Add("Remove", "");
+				var _with2 = grdMembers.DisplayLayout.Bands(0).Columns;
+				_with2.FromKey("PeopleID").Hidden = true;
+				_with2.FromKey("Gender").CellStyle.HorizontalAlign = HorizontalAlign.Center;
+				_with2.FromKey("Gender").Header.Caption = "Gender";
+				_with2.FromKey("Gender").Width = 50;
+				_with2.FromKey("Name").Width = 130;
+				_with2.FromKey("BirthDate").Width = 70;
+				_with2.FromKey("BirthDate").Format = "MM/dd/yyyy";
+				_with2.FromKey("BirthDate").CellStyle.HorizontalAlign = HorizontalAlign.Right;
+				_with2.FromKey("Remove").Width = 80;
+				_with2.FromKey("Remove").NullText = "Remove";
+				_with2.FromKey("Remove").Type = Infragistics.WebUI.UltraWebGrid.ColumnType.Button;
+				_with2.FromKey("Remove").CellStyle.HorizontalAlign = HorizontalAlign.Center;
+			}
+		} catch (Exception ex) {
+			lblError.Text = "LoadMembers::" + ex.Message;
+		} finally {
+			oPeople = null;
+			Session.Add("LinkName", txtName.Text);
+		}
+	}
+
+	private void UpdRow(long RowID)
+	{
+		if (Session["AccessType"] == "R")
+			return;
+		Profile.ClsHouseholds oHouseholds = new Profile.ClsHouseholds();
+		try {
+			var _with3 = oHouseholds;
+			_with3.Name = txtName.Text;
+			_with3.Address1 = txtAddress.Text;
+			_with3.Address2 = txtAddress2.Text;
+			_with3.City = txtCity.Text;
+			_with3.Email = txtEmail.Text;
+			_with3.EmailList = chkEmail.Checked;
+			_with3.SportsCard = txtCityCard.Text;
+			_with3.State = txtState.Text;
+			_with3.Zip = txtZip.Text;
+			_with3.Phone = txtPhone.Text;
+			oHouseholds.UpdRow(RowID, Session["CompanyID"], Session["TimeZone"]);
+		} catch (Exception ex) {
+			Session["ErrorMSG"] = "UpdRow::" + ex.Message;
+		} finally {
+			oHouseholds = null;
+		}
+	}
+
+	private void ClearFields()
+	{
+		grdMembers.Controls.Clear();
+		txtName.Text = "";
+		txtAddress.Text = "";
+		txtAddress2.Text = "";
+		txtCity.Text = "CORAL SPRINGS";
+		txtState.Text = "FL";
+		txtZip.Text = "";
+		txtPhone.Text = "";
+		txtEmail.Text = "";
+		chkEmail.Checked = false;
+		hidEMail.Value = "";
+		txtCityCard.Text = "";
+		txtComments.Enabled = false;
+		btnComments.Enabled = false;
+		Session["ErrorMsg"] = "";
+	}
+
+	private void ADDRow()
+	{
+		if (Session["AccessType"] == "R")
+			return;
+		Profile.ClsHouseholds oHouseholds = new Profile.ClsHouseholds();
+		try {
+			var _with4 = oHouseholds;
+			_with4.Name = txtName.Text;
+			_with4.Address1 = txtAddress.Text;
+			_with4.Address2 = txtAddress2.Text;
+			_with4.City = txtCity.Text;
+			_with4.Email = txtEmail.Text;
+			if (chkEmail.Checked) {
+				_with4.EmailList = 1;
+			} else {
+				_with4.EmailList = 0;
+			}
+			_with4.SportsCard = txtCityCard.Text;
+			_with4.State = txtState.Text;
+			_with4.Zip = txtZip.Text;
+			_with4.Phone = txtPhone.Text;
+			_with4.CreatedUser = Session["UserName"];
+			oHouseholds.UpdRow(0, Session["CompanyID"], Session["TimeZone"]);
+			Session["HouseID"] = _with4.HouseId;
+		} catch (Exception ex) {
+			Session["ErrorMSG"] = ex.Message;
+		} finally {
+			oHouseholds = null;
+		}
+
+	}
+
+	private void btnSave_Click(System.Object sender, System.EventArgs e)
+	{
+		if (Session["AccessType"] == "R")
+			return;
+		if (Session["HouseID"] > 0) {
+			UpdateHousehold();
+		} else {
+			AddHouseholds();
+		}
+	}
+
+	private void UpdateHousehold()
+	{
+		if (errorRTN() == true) {
+			Interaction.MsgBox("ERROR: " + lblError.Text);
+			return;
+		}
+		if (string.IsNullOrEmpty(Session["ErrorMsg"]))
+			UpdRow(Session["HouseID"]);
+		//If Session("ErrorMsg") = "" Then Call UpdEmail(Session("HouseID"))
+		if (string.IsNullOrEmpty(Session["ErrorMsg"]))
+			Interaction.MsgBox("Changes successfully completed");
+		lblError.Text = Session["ErrorMsg"];
+	}
+
+	private void AddHouseholds()
+	{
+		if (errorRTN() == true) {
+			Interaction.MsgBox("ERROR: " + lblError.Text);
+			return;
+		}
+		if (string.IsNullOrEmpty(Session["ErrorMsg"]))
+			ADDRow();
+		//If Session("ErrorMsg") = "" Then Call UpdEmail(Session("HouseID"))
+		if (string.IsNullOrEmpty(Session["ErrorMsg"]))
+			Interaction.MsgBox("New Record Added Successfully");
+		lblError.Text = Session["ErrorMsg"];
+		btnComments.Enabled = true;
+		txtComments.Enabled = true;
+	}
+
+	private void btnComments_Click(System.Object sender, System.EventArgs e)
+	{
+		if (Session["HouseID"] == 0) {
+			if (errorRTN() == true) {
+				Interaction.MsgBox("ERROR: " + lblError.Text);
+				return;
+			}
+			ADDRow();
+		}
+
+		if (Session["HouseID"] > 0) {
+			if (errorRTN() == true) {
+				Interaction.MsgBox("ERROR: " + lblError.Text);
+				return;
+			}
+			UpdRow(Session["HouseID"]);
+			Session.Add("LinkID", Session["HouseID"]);
+			Session.Add("CommentType", "H");
+			Session["CallingScreen"] = "HouseHolds.aspx";
+			Response.Redirect("Comments.aspx");
+		}
+	}
+
+	private bool errorRTN()
+	{
+		bool functionReturnValue = false;
+		functionReturnValue = false;
+		if (string.IsNullOrEmpty(txtName.Text)) {
+			if (Session["USERACCESS"] == "R") {
+				lblError.Text = "Update Not allowed";
+			} else {
+				lblError.Text = "Name missing ";
+			}
+			functionReturnValue = true;
+		}
+		return functionReturnValue;
+	}
+
+	public void MsgBox(string Message)
+	{
+		Label strScript = new Label();
+		//System.Web.HttpContext.Current.Response.Write("<SCRIPT LANGUAGE=""JavaScript"">" & vbCrLf)
+
+		//System.Web.HttpContext.Current.Response.Write("alert(""" & Message & """)" & vbCrLf)
+
+		//System.Web.HttpContext.Current.Response.Write("</SCRIPT>")
+
+
+		strScript.Text = "<SCRIPT LANGUAGE='JavaScript'>" + Environment.NewLine + "window.alert('" + Message + "')</script>";
+
+		Page.Controls.Add(strScript);
+
+	}
+
+	private void RemoveMember(long PeopleID)
+	{
+		if (Session["AccessType"] == "R")
+			return;
+		Profile.ClsHouseholds oHousehold = new Profile.ClsHouseholds();
+		try {
+			var _with5 = oHousehold;
+			_with5.HouseId = 0;
+			oHousehold.UpdMember(PeopleID, Session["CompanyID"]);
+		} catch (Exception ex) {
+			Session["ErrorMSG"] = ex.Message;
+		} finally {
+			oHousehold = null;
+		}
+	}
+
+	private void LoadComments(long HouseID)
+	{
+		Website.ClsComments oComments = new Website.ClsComments();
+		int I = 0;
+		DataTable rsData = null;
+		try {
+			rsData = oComments.GetRecords(0, HouseID, Session["CompanyID"]);
+			txtComments.Text = "";
+			if ((rsData != null)) {
+				for (I = 0; I <= rsData.Rows.Count - 1; I++) {
+					txtComments.Text = txtComments.Text + " " + rsData.Rows[I]["Comment"] + Constants.vbCrLf;
+				}
+			}
+		} catch (Exception ex) {
+			lblError.Text = ex.Message;
+		} finally {
+			oComments = null;
+		}
+	}
+
+	private void btnDelete_Click(System.Object sender, System.EventArgs e)
+	{
+		//1) Put a label control beneath your button but sets its Visible property to false.  Name it lblConfirm.
+		//2) Set the CommandArgument property of your button to "Confirm" (u can use any string, but "Confirm" will do for this example).
+		//3) In your server-side click event, do this:
+		if (Session["AccessType"] == "R")
+			return;
+		Button btn = (Button)sender;
+		if (string.IsNullOrEmpty(lblDelete.Text))
+			btn.CommandArgument = "Confirm";
+		if (btn.CommandArgument == "Confirm") {
+			lblDelete.Text = "*Click Delete button again to confirm.*";
+			lblDelete.Visible = true;
+			btn.CommandArgument = "Delete";
+		} else if (btn.CommandArgument == "Delete") {
+			if (Session["HouseID"] > 0) {
+				DELRow(Session["HouseID"]);
+				//If Session("ErrorMsg") = "" Then Call DELComments(Session("HouseID"))
+				//If Session("ErrorMsg") = "" Then Call DELUserPtn(Session("HouseID"))
+				if (string.IsNullOrEmpty(Session["ErrorMsg"]))
+					RemoveMember(Session["HouseID"]);
+				//If Session("ErrorMsg") = "" Then Call DELEmail(Session("HouseID"))
+				lblError.Text = Session["ErrorMsg"];
+				ClearFields();
+				grdMembers.Clear();
+				grdMembers.Controls.Clear();
+				grdMembers.ResetBands();
+				Session["HouseID"] = 0;
+			}
+			lblDelete.Text = "";
+			lblDelete.Visible = false;
+			btn.CommandArgument = "Confirm";
+		}
+
+		//You are using the label as a message box of sorts and the CommandArgument of the button to tell the click event whether 
+		//you need to confirm or have confirmed.
+	}
+
+	private void DELRow(long HouseID)
+	{
+		if (Session["AccessType"] == "R")
+			return;
+		Profile.ClsHouseholds oHouseholds = new Profile.ClsHouseholds();
+		try {
+			oHouseholds.DELRow(HouseID, Session["CompanyID"]);
+		} catch (Exception ex) {
+			Session["ErrorMsg"] = ex.Message;
+		} finally {
+			oHouseholds = null;
+		}
+	}
+
+	//Private Sub DELComments(ByVal HouseID As Long)
+	//    If Session("AccessType") = "R" Then Exit Sub
+	//    Dim oComments As New Website.ClsComments
+	//    Try
+	//        oComments.DELRow(0, HouseID, "H", Session("CompanyID"))
+	//    Catch ex As Exception
+	//        Session("ErrorMsg") = ex.Message
+	//    Finally
+	//        oComments = Nothing
+	//    End Try
+	//End Sub
+
+	//Private Sub DELEmail(ByVal HouseID As Long)
+
+	//    If Session("AccessType") = "R" Then Exit Sub
+	//    Dim oEmail As New Profile.ClsEmails
+	//    Try
+	//        oEmail.DELEmail(HouseID, Session("SeasonID"), Session("CompanyID"))
+	//    Catch ex As Exception
+	//        Session("ErrorMSG") = ex.Message
+	//    Finally
+	//        oEmail = Nothing
+	//    End Try
+	//End Sub
+
+	//Private Sub UpdEmail(ByVal HouseID As Long)
+	//    If Session("AccessType") = "R" Then Exit Sub
+	//    Dim oHousehold As New Profile.ClsHouseholds
+	//    Try
+	//        With oHousehold
+	//            .Email = txtEmail.Text
+	//            If txtEmail.Text > "" Then oHousehold.AddEmail(HouseID, Session("SeasonID"), Session("CompanyID"))
+	//        End With
+	//    Catch ex As Exception
+	//        Session("ErrorMSG") = ex.Message
+	//    Finally
+	//        oHousehold = Nothing
+	//    End Try
+	//End Sub
+
+	//Private Sub DELUserPtn(ByVal HouseID As Long)
+	//    If Session("AccessType") = "R" Then Exit Sub
+	//    Dim oHousehold As New Profile.ClsHouseholds
+	//    Try
+	//        With oHousehold
+	//            .HouseId = 0
+	//            oHousehold.UpdMember(HouseID, Session("CompanyID"))
+	//        End With
+	//    Catch ex As Exception
+	//        Session("ErrorMSG") = ex.Message
+	//    Finally
+	//        oHousehold = Nothing
+	//    End Try
+	//End Sub
+
+	private void imgAddress_Click(System.Object sender, System.Web.UI.ImageClickEventArgs e)
+	{
+		Session["FirstLetter"] = txtAddress.Text;
+		Session["SearchType"] = "Address1";
+		Response.Redirect("SearchHouse.aspx");
+	}
+
+	private void imgPhone_Click(System.Object sender, System.Web.UI.ImageClickEventArgs e)
+	{
+		Session["FirstLetter"] = Strings.Trim(txtPhone.Text);
+		Session["SearchType"] = "Phone";
+		Response.Redirect("SearchHouse.aspx");
+	}
+
+	private void imgCity_Click(System.Object sender, System.Web.UI.ImageClickEventArgs e)
+	{
+		Session["FirstLetter"] = txtCity.Text;
+		Session["SearchType"] = "City";
+		Response.Redirect("SearchHouse.aspx");
+	}
+
+	protected void imgName_Click(object sender, System.Web.UI.ImageClickEventArgs e)
+	{
+		Session["FirstLetter"] = txtName.Text;
+		Session["SearchType"] = "Name";
+		Response.Redirect("SearchHouse.aspx");
+	}
+
+	protected void imgEmail_Click(object sender, System.Web.UI.ImageClickEventArgs e)
+	{
+		Session["FirstLetter"] = txtEmail.Text;
+		Session["SearchType"] = "Email";
+		Response.Redirect("SearchHouse.aspx");
+	}
+
+	private void btnAdd_Click(System.Object sender, System.EventArgs e)
+	{
+		if (txtName.Text > "") {
+			Session["PeopleID"] = 0;
+			Session["FirstLetter"] = txtName.Text;
+			Session["SearchType"] = "LastName";
+			Response.Redirect("People.aspx");
+		}
+	}
+
+	protected void grdMembers_ClickCellButton(object sender, Infragistics.WebUI.UltraWebGrid.CellEventArgs e)
+	{
+		//Session("PeopleID") = grdMembers.DisplayLayout.ActiveRow.Cells(0).Text
+		Session["PeopleID"] = grdMembers.DisplayLayout.ActiveRow.Cells.FromKey("PeopleID").Value;
+		if (Session["PeopleID"] > 0) {
+			RemoveMember(Session["PeopleID"]);
+			LoadMembers(Session["HouseID"]);
+		}
+	}
+
+	protected void grdMembers_SelectedRowsChange(object sender, Infragistics.WebUI.UltraWebGrid.SelectedRowsEventArgs e)
+	{
+		Session["PeopleID"] = grdMembers.DisplayLayout.ActiveRow.Cells.FromKey("PeopleID").Value;
+		if (Session["PeopleID"] > 0) {
+			Session["HouseID"] = 0;
+			Response.Redirect("People.aspx");
+		}
+	}
+	public Households()
+	{
+		Load += Page_Load;
+	}
+}

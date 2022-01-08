@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="CSBCDbContext-Web.config Connection String" description="CSBCDbContext Connection String used in web.config by the application to access the database." defaultValue="Server=tcp:richardsalit.database.windows.net,1433;Initial Catalog=csbchoops3;Persist Security Info=False;User ID=rsalit;Password=w@Ker1516;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\personal\\Source\\Repos\\Csbc\\CSBCTest\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='CSBCDbContext']/@connectionString" />
+  </parameter>
+</parameters>

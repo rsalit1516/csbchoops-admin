@@ -1,0 +1,43 @@
+﻿<section class="mainbar" ng-controller="WebContentSummaryCtrl as vm">
+    <section class="matter">
+        <div class="container">
+            <div class="row">
+                <div class="widget wviolet">
+                    <div data-cc-widget-header title="{{vm.title}}"></div>
+                    <div class="widget-content user">
+                        <table class="table table-striped table-condensed" id="contentSummary">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Title</th>
+                                    <th>Subtitle</th>
+                                    <th>Body</th>
+                                    <th>Location</th>
+                                    <th>Date / Time</th>
+                                    <th>Expiration</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="content in vm.content">
+                                    <!--<td><a ui-sref="webContent.edit({id: content.webContentId})">{{content.title}} - {{content.webContentId}}</a></td>-->
+                                    <td>{{content.webContentType.webContentTypeDescription}}</td>
+                                     <td>{{content.title}}</td>
+                                    <td>{{content.subTitle}}</td>
+                                    <td>{{content.body}}</td>
+                                    <td>{{content.location}}</td>
+                                    <td>{{content.dateAndTime}}</td>
+                                    <td>{{content.expirationDate | date: small}}</td>
+                                    <td><a ng-click="vm.showCreateWebContentForm()" class="btn btn-primary">List</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="widget-foot">
+                        <div class="clearfix"><button class="btn btn-raised btn-primary" >Button Test</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

@@ -1,0 +1,110 @@
+﻿
+
+    <div class="container">
+        <div id="TopHeader">
+            <asp:Image ID="Image1" runat="server" Height="107px" CssClass="center-block" ImageUrl="images\topcsbc.jpg"
+                       Width="770px" />
+        </div>
+
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                    <a class="navbar-brand" href="#">CSBC</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Home<b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="http://www.csbchoops.com" target="_blank">CSBC Public Site</a></li>
+                                <li><a href="PasswordReset.aspx">Change Password</a></li>
+                                <!--<li><a href="LogOut.aspx">Log Out</a></li>-->
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <!--<li><a href='<%=BoardForm %>'>Board of Directors</a></li>
+                                <li><a href='<%=SearchHouseholds%>'>Households</a></li>
+                                <li><a href='<%=PeopleForm %>'>People</a></li>
+                                <li><a href='<%= ColorForm %>'> Uniform Colors</a></li>
+                                <li><a href='<%=UserForm %>'>User Security</a></li>
+                                <li><a href='<%=AnnouncementsForm %>'>Announcements</a></li>
+                                <%--
+                                <li><a href="Transfer.aspx?Transfer=Announcements.aspx">Announcements</a></li>--%>
+                                <%--
+                                <li><a href="Transfer.aspx?Transfer=Calendar.aspx">Calendar</a></li>--%>
+                                <%---->
+                                <li><a href="Transfer.aspx?Transfer=Content.aspx">Content Management</a></li>--%>
+
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Season<b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href='<%= SeasonForm %>'>Seasons</a></li>
+                                <li><a href='<%=CoachForm %>'>Coaches</a></li>
+                                <li><a href='<%=DivisionForm %>'>Divisions</a></li>
+                                <li><a href='<%= SearchRegistrationPaymentsForm %>'>Registration / Payments</a></li>
+                                <!--<li><a href="Transfer.aspx?Transfer=Refunds.aspx">Refunds</a></li>-->
+                                <li><a href='<%=GamesForm %>'>Game Schedules</a></li>
+                                <li><a href='<%=SponsorForm %>'>Sponsors</a></li>
+                                <li><a href='<%=TeamForm %>'>Build Teams</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Reports<b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <%--
+                                <li><a href="reports/BoardMembers.rpt">Board Members</a></li>--%>
+                                <%--
+                                <li><a href="ReportPlayers.aspx">Coaches</a></li>
+                                <li><a href="ReportPlayers.aspx">Directors Phones</a></li>
+                                <li><a href="ReportPlayers.aspx">Divisions</a></li>
+                                <li><a href="ReportSchedules.aspx">Games Schedules</a></li>--%>
+                                <li><a href="RptDraftList.aspx">Draft Lists</a></li>
+                                <%--
+                                <li><a href="ReportRefunds.aspx">Refunds</a></li>
+                                <li><a href="ReportPlayers.aspx">Sponsors</a></li>
+                                <li><a href="ReportPlayers.aspx">Sponsor Books</a></li>
+                                <li><a href="ReportRosters.aspx">Team Rosters</a></li>--%>
+                                <!--<li><a href="ReportTryouts.aspx">Tryouts (Draft list)</a></li>-->
+                                <%--
+                                <li><a href="report.aspx?Report=TryoutsAll.rpt">Tryouts (Draft List)</a></li>--%>
+                                <%--
+                                <li><a href="ReportPlayers.aspx">Uniforms</a></li>
+                                <li><a href="ReportUnpaid.aspx">Unpaid List</a></li>
+                                <li><a href="ReportVolunteers.aspx">Volunteers</a></li>
+                                <li><a href="ReportPlayers.aspx">Waiting List</a></li>--%>
+                                <%--
+                                <li><a href="RptDraftList.aspx">Draft List</a></li>
+                                <li><a href="ReportForm.aspx">Reports</a></li>--%>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="nav navbar-nav navbar-right">
+                        <asp:Label ID="lblUser1" runat="server" CssClass="h4"></asp:Label>
+                        <asp:LinkButton ID="linkLogout" runat="server" OnClick="linkLogout_Click" CssClass="badge">Logout</asp:LinkButton>
+                    </div>
+                </div>
+
+            </div>
+        </nav>
+    </div>
+   

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSBC.Core", "CSBC.Core\CSBC.Core.csproj", "{F51EF06B-4D4E-42F2-9608-A7BD63C6CDC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSBC.Admin.Web", "CSBCTest\CSBC.Admin.Web.csproj", "{8C9A6D31-2099-4A97-9597-24DA3A4E3D06}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F51EF06B-4D4E-42F2-9608-A7BD63C6CDC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F51EF06B-4D4E-42F2-9608-A7BD63C6CDC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F51EF06B-4D4E-42F2-9608-A7BD63C6CDC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F51EF06B-4D4E-42F2-9608-A7BD63C6CDC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C9A6D31-2099-4A97-9597-24DA3A4E3D06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C9A6D31-2099-4A97-9597-24DA3A4E3D06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C9A6D31-2099-4A97-9597-24DA3A4E3D06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C9A6D31-2099-4A97-9597-24DA3A4E3D06}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BBFD049C-63D4-448A-8F56-BDF0E9D8499E}
+	EndGlobalSection
+EndGlobal
